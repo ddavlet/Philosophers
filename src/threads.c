@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:48:32 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 15:59:40 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:10:26 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./phylosophers.h"
+#include "../inc/phylosophers.h"
 
 void	*pylo_routine(void *ptr)
 {

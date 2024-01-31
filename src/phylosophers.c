@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 20:54:01 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:10:17 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./phylosophers.h"
+#include "../inc/phylosophers.h"
 
 void	debug_print(t_phylos *phylo, const char *txt)
 {

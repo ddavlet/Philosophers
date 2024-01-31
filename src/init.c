@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:47:10 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 19:43:50 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:10:19 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./phylosophers.h"
+#include "../inc/phylosophers.h"
 
 t_setup	*init_info(const char **args)
 {

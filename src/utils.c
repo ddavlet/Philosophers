@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:47:21 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 15:59:42 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:10:35 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "phylosophers.h"
+#include "../inc/phylosophers.h"
 
 static int	check_beyond_int(time_t nbr, char n)
 {

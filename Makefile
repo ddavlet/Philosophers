@@ -1,11 +1,11 @@
-CC = clang
-NAME = phylosophers
-FLAGS = -Wall -Werror -Wextra
-INCLUDES = -I.
-RM = rm -f
-RANNAME = ranlib $(NAME)
-# UTILS_DIR = ./utils/
-SRC = phylosophers.c threads.c utils.c init.c routines.c check_dead.c utils_2.c
+CC := cc
+NAME := phylosophers
+FLAGS := -Wall -Werror -Wextra
+INCLUDES := -Iinc
+RM := rm -f
+SRC_DIR := ./src/
+SOURCE := phylosophers.c threads.c utils.c init.c routines.c check_dead.c utils_2.c
+SRC := $(addprefix $(SRC_DIR), $(SOURCE))
 OBJ := $(SRC:.c=.o)
 
 all: $(NAME)
