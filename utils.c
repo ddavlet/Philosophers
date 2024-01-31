@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:47:21 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 11:53:30 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:59:42 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ time_t	ft_atol(const char *nptr)
 	}
 	return (nbr);
 }
+
 time_t	get_time()
 {
 	struct timeval	tp;
@@ -46,3 +47,9 @@ time_t	get_time()
 	time = tp.tv_sec * 1000 + tp.tv_usec * 0.001;
 	return (time);
 }
+
+time_t	get_timestamp(t_phylos *phylo)
+{
+	return (get_time() - phylo->setup->start_time);
+}
+

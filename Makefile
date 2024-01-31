@@ -5,7 +5,7 @@ INCLUDES = -I.
 RM = rm -f
 RANNAME = ranlib $(NAME)
 # UTILS_DIR = ./utils/
-SRC = phylosophers.c threads.c utils.c init.c routines.c
+SRC = phylosophers.c threads.c utils.c init.c routines.c check_dead.c utils_2.c
 OBJ := $(SRC:.c=.o)
 
 all: $(NAME)
