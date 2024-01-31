@@ -1,4 +1,4 @@
-CC = gcc
+CC = clang
 NAME = phylosophers
 FLAGS = -Wall -Werror -Wextra
 INCLUDES = -I.
@@ -14,7 +14,7 @@ $(NAME): $(OBJ)
 	$(CC) -pthread $(FLAGS) -g $(OBJ) $(INCLUDES) -o $(NAME)
 
 %.o: %.c
-	$(CC) -g  -pthread $(FLAGS) -c $< -o $@
+	$(CC) -g -pthread $(FLAGS) -c $< -o $@
 
 clean:
 		$(RM) $(OBJ) $(BONUS_OBJ)

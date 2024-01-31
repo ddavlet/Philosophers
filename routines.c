@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:49:57 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 16:06:18 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:14:46 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ void	is_eating(t_phylos *phylo)
 		printf("%ld %d is eating\n", get_timestamp(phylo), phylo->no);
 		pthread_mutex_unlock(&(phylo->setup->print));
 		pthread_mutex_lock(&(phylo->mut_eat));
+		pthread_mutex_lock(&(phylo->setup->mut_die));
 		phylo->eat_time = get_time();
 		phylo->times_eated++;
+		pthread_mutex_unlock(&(phylo->setup->mut_die));
 		pthread_mutex_unlock(&(phylo->mut_eat));
 		usleep(phylo->setup->tt_eat * 1000);
 	}

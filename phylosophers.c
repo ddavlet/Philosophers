@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 16:07:13 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/31 20:54:01 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*routine_controler(void *ptr)
 
 	phylo = (t_phylos *)ptr;
 	is_thinking(phylo);
-	while (1)
+	while (phylo->times_eated < phylo->setup->max_eat)
 	{
 		if (!(phylo->setup->no_phylos % 2))
 			even_routine(phylo);
@@ -59,7 +59,33 @@ void	*routine_controler(void *ptr)
 		if (check_dead(phylo))
 			pthread_exit(NULL);
 	}
+	pthread_exit(phylo);
 	return (NULL);
+}
+
+void	terminate_setup(t_setup **setup_ptr)
+{
+	t_setup	*setup;
+
+	setup = *setup_ptr;
+	pthread_mutex_destroy(&(setup->mut_die));
+	pthread_mutex_destroy(&(setup->print));
+	free(setup);
+	*setup_ptr = NULL;
+}
+
+void	terminate_phylos(t_phylos **phylos)
+{
+	uint32_t	i;
+
+	i = 0;
+	while(phylos[i])
+	{
+		pthread_mutex_destroy(&(phylos[i]->l_fork));
+		pthread_mutex_destroy(&(phylos[i]->mut_eat));
+		free(phylos[i++]);
+	}
+	free(phylos);
 }
 
 int	main(int argc, char *argv[])
@@ -77,11 +103,12 @@ int	main(int argc, char *argv[])
 	if (pthread_join(setup->th_die, &ptr))
 		return (1);
 	if (ptr)
-	{
-		debug_print((t_phylos *)ptr, "\n---died----\n");
 		is_died((t_phylos *)ptr);
-	}
+	else
+		;
 	if (join_threads(phylos))
 		return (1);
+	terminate_setup(&setup);
+	terminate_phylos(phylos);
 	return (0);
 }

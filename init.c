@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:47:10 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 15:59:45 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/31 19:43:50 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_phylos	*init_phylo(t_setup *setup, uint32_t no, t_phylos **phylos)
 		return (NULL); // dela
 	new_phylo->no = no;
 	new_phylo->eat_time = get_time();
+	new_phylo->times_eated = 0;
 	if (pthread_mutex_init(&new_phylo->l_fork, NULL))
 		return (NULL); // dela
 	if (pthread_mutex_init(&new_phylo->mut_eat, NULL))
@@ -62,10 +63,10 @@ t_phylos	**init_phylos(t_setup *setup)
 	t_phylos	**phylosofers;
 
 	i = 0;
-	phylosofers = (t_phylos **)malloc(sizeof(t_phylos *) * setup->no_phylos + 1);
+	phylosofers = (t_phylos **)malloc(sizeof(t_phylos *) * (setup->no_phylos + 1));
 	if (!phylosofers)
 		return (NULL); //dela
-	phylosofers[setup->no_phylos] = NULL;
+	phylosofers[setup->no_phylos] = 0;
 	while (i < setup->no_phylos)
 	{
 		phylosofers[i] = init_phylo(setup, (i + 1), phylosofers);

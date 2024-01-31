@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:52 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 16:07:35 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/31 20:38:41 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <string.h>
 
 /*Type definitions*/
 
@@ -36,6 +37,7 @@ typedef struct s_setup
 	time_t			start_time;
 	pthread_t		th_die;
 	bool			phylo_dead;
+	bool			phylo_full;
 	pthread_mutex_t	mut_die;
 }					t_setup;
 
