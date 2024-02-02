@@ -17,10 +17,10 @@ $(NAME): $(OBJ)
 	$(CC) -g -pthread $(FLAGS) -c $< -o $@
 
 clean:
-		$(RM) $(OBJ) $(BONUS_OBJ)
+		$(RM) $(OBJ)
 
 fclean: clean
-		$(RM) $(NAME) $(BONUS)
+		$(RM) $(NAME)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 21:10:17 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/01 19:55:30 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ void	debug_print(t_phylos *phylo, const char *txt)
 void	even_routine(t_phylos	*phylo)
 {
 	if ((phylo->no % 2))
-			try_fork_first(phylo);
+		try_fork_first(phylo);
 	else
+	{
+		usleep(10);
 		try_fork(phylo);
+	}
 }
 
 void	odd_routine(t_phylos	*phylo)
@@ -35,7 +38,7 @@ void	odd_routine(t_phylos	*phylo)
 		try_fork(phylo);
 	else
 	{
-		usleep(2);
+		usleep(10);
 		try_fork(phylo);
 	}
 }
@@ -88,14 +91,20 @@ void	terminate_phylos(t_phylos **phylos)
 	free(phylos);
 }
 
+int	usage_message()
+{
+	printf("usage: ./phylosopher number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_setup		*setup;
 	t_phylos	**phylos;
 	void		*ptr;
 
-	if (argc < 4)
-		return (1);
+	if (argc < 5)
+		return (usage_message());
 	setup = init_info((const char **)&argv[1]);
 	phylos = init_phylos(setup);
 	pthread_create(&(setup->th_die), NULL, &check_die, phylos);
