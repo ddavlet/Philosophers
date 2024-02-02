@@ -6,11 +6,22 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:47:10 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 21:10:19 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/02 18:41:43 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/phylosophers.h"
+
+int	check_init(t_setup *s)
+{
+	if (!s->no_phylos
+		|| !s->tt_die
+		|| !s->tt_eat
+		|| !s->tt_sleep
+		|| !s->max_eat)
+		return (1);
+	return (0);
+}
 
 t_setup	*init_info(const char **args)
 {
@@ -27,9 +38,7 @@ t_setup	*init_info(const char **args)
 		setup->max_eat = ft_atol(args[4]);
 	else
 		setup->max_eat = UINT32_MAX;
-	if (pthread_mutex_init(&(setup->print), NULL))
-		return (setup); // dela
-	if (pthread_mutex_init(&(setup->mut_die), NULL))
+	if (check_init(setup))
 		return (setup); // dela
 	return(setup);
 }
@@ -45,15 +54,10 @@ t_phylos	*init_phylo(t_setup *setup, uint32_t no, t_phylos **phylos)
 	new_phylo->no = no;
 	new_phylo->eat_time = get_time();
 	new_phylo->times_eated = 0;
-	if (pthread_mutex_init(&new_phylo->l_fork, NULL))
-		return (NULL); // dela
-	if (pthread_mutex_init(&new_phylo->mut_eat, NULL))
-		return (NULL); // dela
 	new_phylo->setup = setup;
-	if (no != 1)
-		new_phylo->r_fork = &phylos[no - 2]->l_fork;
-	if (no == setup->no_phylos)
-		phylos[0]->r_fork = &new_phylo->l_fork;
+	new_phylo->pid = fork();
+	if (new_phylo->pid < 0)
+		return (new_phylo);
 	return (new_phylo);
 }
 

@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phylosophers.c                                     :+:      :+:    :+:   */
+/*   phylo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/01 19:55:30 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/02 22:24:43 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/phylosophers.h"
 
-void	debug_print(t_phylos *phylo, const char *txt)
+int	one_phylo(t_setup *setup)
 {
-	pthread_mutex_lock(&(phylo->setup->print));
-	printf("%i: %s", phylo->no, txt);
-	pthread_mutex_unlock(&(phylo->setup->print));
+	printf("%ld %d is thinking\n", get_time() - setup->start_time, 1);
+	printf("%ld %d has taken a fork\n", get_time() - setup->start_time, 1);
+	while ((get_time() - setup->start_time) != setup->tt_die)
+		usleep(1);
+	printf("%ld %d died\n", get_time() - setup->start_time, 1);
+	free(setup);
+	return (0);
 }
 
 void	even_routine(t_phylos	*phylo)
@@ -82,6 +86,8 @@ void	terminate_phylos(t_phylos **phylos)
 	uint32_t	i;
 
 	i = 0;
+	if (!phylos)
+		return ;
 	while(phylos[i])
 	{
 		pthread_mutex_destroy(&(phylos[i]->l_fork));
@@ -93,7 +99,7 @@ void	terminate_phylos(t_phylos **phylos)
 
 int	usage_message()
 {
-	printf("usage: ./phylosopher number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+	printf("Error: too few arguments.\nUsage: ./phylosopher number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 	return (0);
 }
 
@@ -103,9 +109,11 @@ int	main(int argc, char *argv[])
 	t_phylos	**phylos;
 	void		*ptr;
 
-	if (argc < 5)
+	if (argc < 5 || argc > 6)
 		return (usage_message());
 	setup = init_info((const char **)&argv[1]);
+	if (setup->no_phylos < 2)
+		return (one_phylo(setup));
 	phylos = init_phylos(setup);
 	pthread_create(&(setup->th_die), NULL, &check_die, phylos);
 	init_thread(phylos);

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:47:21 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 21:10:35 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/02 16:53:01 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 static int	check_beyond_int(time_t nbr, char n)
 {
-	if (nbr == LONG_MAX / 10 && n - '0' > 7)
-			return (UINT32_MAX);
+	if (nbr == LONG_MAX / 10 && n - '0' >= 7)
+	{
+		printf("Warning: argument went beyond max value.\nMax value is set");
+		return (UINT32_MAX);
+	}
 	return (0);
 }
 
@@ -35,6 +38,8 @@ time_t	ft_atol(const char *nptr)
 		nbr = nbr * 10 + (time_t)(*nptr - '0');
 		nptr++;
 	}
+	if(*nptr != 0)
+		return (0);
 	return (nbr);
 }
 
