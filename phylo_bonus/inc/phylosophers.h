@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:52 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/02 22:14:45 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 06:58:29 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,15 @@ time_t		get_time();
 time_t		get_timestamp(t_phylos *phylo);
 int			try_fork_first(t_phylos *phylo);
 int			try_fork(t_phylos *phylo);
-void		*check_die(void *ptr);
+void		check_die(t_phylos **phylo);
 
 /*Initialization functions*/
 t_setup		*init_info(const char **args);
 t_phylos	**init_phylos(t_setup *setup);
-t_phylos	*init_phylo(t_setup *setup, uint32_t no, t_phylos **phylos);
-
+t_phylos	*init_phylo(t_setup *setup, uint32_t no);
 /*Process functions*/
 int			init_process(t_phylos **phylos);
-int			join_threads(t_phylos **phylos);
+int			wait_process(t_phylos **phylos);
 void		*pylo_routine(void *ptr);
 
 /*Rountines functions*/
@@ -76,8 +75,5 @@ void		is_died(uint32_t j, t_phylos **phylos);
 void		*routine_controler(t_phylos *phylo);
 /*Mutex functions*/
 int			check_dead(t_phylos *phylo);
-
-/*!!!temporary!!!*/
-void		debug_print(t_phylos *phylo, const char *txt);
 
 #endif

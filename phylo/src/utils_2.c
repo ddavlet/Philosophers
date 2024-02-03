@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:01 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 21:10:31 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 06:32:41 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	try_fork(t_phylos *phylo)
 			is_eating(phylo);
 		}
 	}
-	else
-		is_sleeping(phylo);
+	// else
+		is_sleeping(phylo); // ??
 	return (0);
 }

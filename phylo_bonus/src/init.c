@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:47:10 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/02 18:41:43 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 06:57:30 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ t_setup	*init_info(const char **args)
 	return(setup);
 }
 
-t_phylos	*init_phylo(t_setup *setup, uint32_t no, t_phylos **phylos)
+t_phylos	*init_phylo(t_setup *setup, uint32_t no)
 {
 	t_phylos	*new_phylo;
 
-	(void)setup; //???
 	new_phylo = (t_phylos *)malloc(sizeof(t_phylos));
 	if (!new_phylo)
 		return (NULL); // dela
@@ -73,7 +72,7 @@ t_phylos	**init_phylos(t_setup *setup)
 	phylosofers[setup->no_phylos] = 0;
 	while (i < setup->no_phylos)
 	{
-		phylosofers[i] = init_phylo(setup, (i + 1), phylosofers);
+		phylosofers[i] = init_phylo(setup, (i + 1));
 		i++;
 	}
 	return (phylosofers);

@@ -6,43 +6,15 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:01 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 21:10:31 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 06:48:54 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/phylosophers.h"
 
-int	try_fork_first(t_phylos *phylo)
-{
-	if (!pthread_mutex_lock(&(phylo->l_fork)))
-	{
-		taken_fork(phylo);
-		if (!pthread_mutex_lock(phylo->r_fork))
-		{
-			// debug_print(phylo, "right fork - "); //debug
-			taken_fork(phylo);
-			is_eating(phylo);
-		}
-	}
-	else
-		is_sleeping(phylo);
-	return (0);
-}
-
 int	try_fork(t_phylos *phylo)
 {
-	if (!pthread_mutex_lock(phylo->r_fork))
-	{
-		// debug_print(phylo, "right fork - "); //debug
-		taken_fork(phylo);
-		if (!pthread_mutex_lock(&(phylo->l_fork)))
-		{
-			// debug_print(phylo, "left  fork - "); //debug
-			taken_fork(phylo);
-			is_eating(phylo);
-		}
-	}
-	else
-		is_sleeping(phylo);
-	return (0);
+	while (phylo->setup->no_phylos < 2)
+		usleep(1);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/02 22:14:56 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 07:07:01 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,45 +23,25 @@ int	one_phylo(t_setup *setup)
 	return (0);
 }
 
-void	even_routine(t_phylos	*phylo)
-{
-	if ((phylo->no % 2))
-		try_fork_first(phylo);
-	else
-	{
-		usleep(10);
-		try_fork(phylo);
-	}
-}
-
-void	odd_routine(t_phylos	*phylo)
-{
-	if ((phylo->no % 2) && phylo->no != phylo->setup->no_phylos)
-		try_fork_first(phylo);
-	else if (phylo->no != phylo->setup->no_phylos)
-		try_fork(phylo);
-	else
-	{
-		usleep(10);
-		try_fork(phylo);
-	}
-}
-
 void	*routine_controler(t_phylos *phylo)
 {
 	is_thinking(phylo);
 	while (phylo->times_eated < phylo->setup->max_eat)
 	{
-		if (!(phylo->setup->no_phylos % 2))
-			even_routine(phylo);
-		else
-			odd_routine(phylo);
-		is_sleeping(phylo);
-		is_thinking(phylo);
-		if (check_dead(phylo))
-			pthread_exit(NULL);
+		if (!sem_wait(phylo->sem))
+		{
+			phylo->setup->no_phylos -= 2;
+			if (try_fork(phylo))
+			{
+				taken_fork(phylo);
+				taken_fork(phylo);
+				is_eating(phylo);
+				is_sleeping(phylo);
+			}
+		}
+		// is_thinking(phylo);
 	}
-	pthread_exit(phylo);
+	// pthread_exit(phylo);
 	return (NULL);
 }
 
@@ -107,15 +87,13 @@ int	main(int argc, char *argv[])
 		return (one_phylo(setup));
 	phylos = init_phylos(setup);
 	init_process(phylos);
-	if (join_threads(phylos))
-		printf("Error ecountered");
 	setup->child = fork();
+	wait_process(phylos);
+	if (!setup->child)
+		check_die(phylos);
 	if (waitpid(setup->child, &status, 0))
 		is_died(WIFSIGNALED(status), phylos);
-	else
-		;
-	if (join_threads(phylos))
-		return (1);
+
 	terminate_setup(&setup);
 	terminate_phylos(phylos);
 	return (0);
