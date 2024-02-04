@@ -6,20 +6,15 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:48:32 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/02 22:28:49 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/04 18:33:33 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/phylosophers.h"
 
-void	*pylo_routine(void *ptr)
-{
-	return (ptr);
-}
-
 int	join_threads(t_phylos **phylos)
 {
-	uint32_t i;
+	uint32_t	i;
 
 	i = 0;
 	while (phylos[i])
@@ -35,10 +30,10 @@ int	init_thread(t_phylos **phylos)
 	i = 0;
 	while (phylos[i])
 	{
-		if (pthread_create(&(phylos[i]->thread), NULL, &routine_controler, phylos[i]))
-			return (1); //dela
+		if (pthread_create(&(phylos[i]->thread), NULL,
+				&routine_controler, phylos[i]))
+			return (1);
 		i++;
 	}
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/02 22:28:51 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/04 19:06:27 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,23 @@ void	even_routine(t_phylos	*phylo)
 		try_fork_first(phylo);
 	else
 	{
-		usleep(10);
+		usleep(200);
 		try_fork(phylo);
 	}
 }
 
 void	odd_routine(t_phylos	*phylo)
 {
-	if ((phylo->no % 2) && phylo->no != phylo->setup->no_phylos)
-		try_fork_first(phylo);
-	else if (phylo->no != phylo->setup->no_phylos)
+	if (phylo->no == phylo->setup->no_phylos)
+	{
+		usleep(400);
 		try_fork(phylo);
+	}
+	else if ((phylo->no % 2))
+		try_fork_first(phylo);
 	else
 	{
-		usleep(10);
+		usleep(200);
 		try_fork(phylo);
 	}
 }
@@ -70,39 +73,6 @@ void	*routine_controler(void *ptr)
 	return (NULL);
 }
 
-void	terminate_setup(t_setup **setup_ptr)
-{
-	t_setup	*setup;
-
-	setup = *setup_ptr;
-	pthread_mutex_destroy(&(setup->mut_die));
-	pthread_mutex_destroy(&(setup->print));
-	free(setup);
-	*setup_ptr = NULL;
-}
-
-void	terminate_phylos(t_phylos **phylos)
-{
-	uint32_t	i;
-
-	i = 0;
-	if (!phylos)
-		return ;
-	while(phylos[i])
-	{
-		pthread_mutex_destroy(&(phylos[i]->l_fork));
-		pthread_mutex_destroy(&(phylos[i]->mut_eat));
-		free(phylos[i++]);
-	}
-	free(phylos);
-}
-
-int	usage_message()
-{
-	printf("Error: too few arguments.\nUsage: ./phylosopher number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
-	return (0);
-}
-
 int	main(int argc, char *argv[])
 {
 	t_setup		*setup;
@@ -112,20 +82,20 @@ int	main(int argc, char *argv[])
 	if (argc < 5 || argc > 6)
 		return (usage_message());
 	setup = init_info((const char **)&argv[1]);
+	if (!setup)
+		return (error_message());
 	if (setup->no_phylos < 2)
 		return (one_phylo(setup));
 	phylos = init_phylos(setup);
+	if (!phylos)
+		return (terminate_setup(&setup, 1));
 	pthread_create(&(setup->th_die), NULL, &check_die, phylos);
 	init_thread(phylos);
-	if (pthread_join(setup->th_die, &ptr))
-		return (1);
+	pthread_join(setup->th_die, &ptr);
 	if (ptr)
 		is_died((t_phylos *)ptr);
-	else
-		;
-	if (join_threads(phylos))
-		return (1);
-	terminate_setup(&setup);
-	terminate_phylos(phylos);
+	join_threads(phylos);
+	terminate_setup(&setup, 0);
+	terminate_phylos(phylos, 0);
 	return (0);
 }

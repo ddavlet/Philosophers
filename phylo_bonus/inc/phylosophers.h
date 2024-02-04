@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:52 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 06:58:29 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/04 17:28:18 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_phylos	*init_phylo(t_setup *setup, uint32_t no);
 /*Process functions*/
 int			init_process(t_phylos **phylos);
 int			wait_process(t_phylos **phylos);
-void		*pylo_routine(void *ptr);
 
 /*Rountines functions*/
 void		is_eating(t_phylos *phylo);

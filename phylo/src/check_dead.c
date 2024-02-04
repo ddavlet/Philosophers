@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:56:12 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/02 22:28:55 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/04 18:15:15 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 int	is_dead(t_phylos *phylo)
 {
 	int	time;
+
 	pthread_mutex_lock(&(phylo->mut_eat));
-		time = phylo->setup->tt_die  - (get_time() - phylo->eat_time);
+	time = phylo->setup->tt_die - (get_time() - phylo->eat_time);
 	pthread_mutex_unlock(&(phylo->mut_eat));
 	if (time <= 0)
 		return (1);
@@ -37,7 +38,7 @@ uint32_t	times_eated(t_phylos *phylos)
 
 int	check_dead(t_phylos *phylo)
 {
-	bool dead;
+	bool	dead;
 
 	pthread_mutex_lock(&(phylo->setup->mut_die));
 	dead = phylo->setup->phylo_dead;
@@ -45,7 +46,6 @@ int	check_dead(t_phylos *phylo)
 	return (dead);
 }
 
-/*Multiplication may overflow*/
 void	*check_die(void *ptr)
 {
 	t_phylos	**phylos;

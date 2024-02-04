@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:52 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/31 20:38:41 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/04 18:00:20 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <string.h>
+# include <stdint.h>
 
 /*Type definitions*/
-
-
 typedef struct s_setup
 {
 	uint32_t		no_phylos;
@@ -55,11 +54,13 @@ typedef struct s_phylos
 
 /*Utils*/
 time_t		ft_atol(const char *nptr);
-time_t		get_time();
+time_t		get_time(void);
 time_t		get_timestamp(t_phylos *phylo);
 int			try_fork_first(t_phylos *phylo);
 int			try_fork(t_phylos *phylo);
 void		*check_die(void *ptr);
+int			usage_message(void);
+int			error_message(void);
 
 /*Initialization functions*/
 t_setup		*init_info(const char **args);
@@ -69,7 +70,6 @@ t_phylos	*init_phylo(t_setup *setup, uint32_t no, t_phylos **phylos);
 /*Thread functions*/
 int			init_thread(t_phylos **phylos);
 int			join_threads(t_phylos **phylos);
-void		*pylo_routine(void *ptr);
 
 /*Rountines functions*/
 void		is_eating(t_phylos *phylo);
@@ -78,11 +78,10 @@ void		is_thinking(t_phylos *phylo);
 void		taken_fork(t_phylos *phylo);
 void		is_died(t_phylos *phylo);
 void		*routine_controler(void *ptr);
-
-/*Mutex functions*/
 int			check_dead(t_phylos *phylo);
 
-/*!!!temporary!!!*/
-void		debug_print(t_phylos *phylo, const char *txt);
+/*Termination functions*/
+int			terminate_phylos(t_phylos **phylos, int code);
+int			terminate_setup(t_setup **setup_ptr, int code);
 
 #endif
