@@ -8,7 +8,7 @@ SOURCE := phylo.c threads.c utils.c init.c routines.c check_dead.c utils_2.c ter
 SRC := $(addprefix $(SRC_DIR), $(SOURCE))
 OBJ := $(SRC:.c=.o)
 
-all: $(NAME)
+all: draw $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) -pthread $(FLAGS) $(OBJ) $(INCLUDES) -o $(NAME)
@@ -24,5 +24,11 @@ fclean: clean
 	@$(RM) $(NAME)
 
 re: fclean all
+
+draw:
+	@if [ ! -d "$(DRAW)" ]; then\
+		git clone git@github.com:ddavlet/draw.git $(DRAW);\
+		mv $(DRAW)/makedraw.sh ./makedraw.sh;\
+	fi
 
 .PHONY: all clean fclean re

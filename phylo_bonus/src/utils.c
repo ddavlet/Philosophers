@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:47:21 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/02 16:53:01 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:09:28 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ time_t	ft_atol(const char *nptr)
 	return (nbr);
 }
 
-time_t	get_time()
+time_t	get_time(void)
 {
 	struct timeval	tp;
 	time_t			time;

@@ -1,11 +1,4 @@
-echo ".....THREE...."
-sleep 1
-echo ".....TWO......"
-sleep 1
-echo ".....ONE......"
-sleep 1
-echo "....LAUNCH...."
-sleep 1
+#!/bin/bash
 echo ""
 sleep 0
 echo ""
@@ -219,35 +212,5 @@ sleep 0.05
 echo "                            "
 sleep 0.05
 echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
-sleep 0.05
-echo "                            "
+
+

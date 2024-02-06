@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 07:07:01 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:07:44 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	terminate_phylos(t_phylos **phylos)
 	i = 0;
 	if (!phylos)
 		return ;
-	while(phylos[i])
+	while (phylos[i])
 	{
 		free(phylos[i++]);
 	}
@@ -93,7 +93,6 @@ int	main(int argc, char *argv[])
 		check_die(phylos);
 	if (waitpid(setup->child, &status, 0))
 		is_died(WIFSIGNALED(status), phylos);
-
 	terminate_setup(&setup);
 	terminate_phylos(phylos);
 	return (0);

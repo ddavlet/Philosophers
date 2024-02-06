@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:52 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/04 17:28:18 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:11:25 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 # include <sys/time.h>
 # include <string.h>
 # include <semaphore.h>
+# include <stdint.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <fcntl.h>
+# include <sys/stat.h>
 
 # define SEMA_NAME "phylo_bonus"
 
@@ -51,7 +56,7 @@ typedef struct s_phylos
 
 /*Utils*/
 time_t		ft_atol(const char *nptr);
-time_t		get_time();
+time_t		get_time(void);
 time_t		get_timestamp(t_phylos *phylo);
 int			try_fork_first(t_phylos *phylo);
 int			try_fork(t_phylos *phylo);
