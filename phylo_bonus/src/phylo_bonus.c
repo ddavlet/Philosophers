@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/06 14:07:44 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:25:17 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,12 @@ int	one_phylo(t_setup *setup)
 void	*routine_controler(t_phylos *phylo)
 {
 	is_thinking(phylo);
-	while (phylo->times_eated < phylo->setup->max_eat)
+	while (phylo->times_eated < phylo->max_eat)
 	{
-		if (!sem_wait(phylo->sem))
-		{
-			phylo->setup->no_phylos -= 2;
-			if (try_fork(phylo))
-			{
-				taken_fork(phylo);
-				taken_fork(phylo);
-				is_eating(phylo);
-				is_sleeping(phylo);
-			}
-		}
-		// is_thinking(phylo);
+		sem_wait(phylo->forks);
+
 	}
-	// pthread_exit(phylo);
+	free(phylo);
 	return (NULL);
 }
 
@@ -68,31 +58,33 @@ void	terminate_phylos(t_phylos **phylos)
 	free(phylos);
 }
 
-int	usage_message()
+int	usage_message(void)
 {
-	printf("Error: too few arguments.\nUsage: ./phylosopher number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+	printf("Error: too few arguments.\nUsage: ./phylosopher"
+		"number_of_philosophers time_to_die time_to_eat time_to_sleep"
+		"[number_of_times_each_philosopher_must_eat]\n");
 	return (0);
+}
+
+int	error_message(void)
+{
+	printf("Error: failed to initialize setup\n");
+	return (1);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_setup		*setup;
-	t_phylos	**phylos;
-	int			status;
+	t_phylos	*phylo;
 
 	if (argc < 5 || argc > 6)
 		return (usage_message());
-	setup = init_info((const char **)&argv[1]);
-	if (setup->no_phylos < 2)
-		return (one_phylo(setup));
-	phylos = init_phylos(setup);
-	init_process(phylos);
-	setup->child = fork();
-	wait_process(phylos);
-	if (!setup->child)
-		check_die(phylos);
-	if (waitpid(setup->child, &status, 0))
-		is_died(WIFSIGNALED(status), phylos);
+	phylo = init_info((const char **)&argv[1]);
+	if (!phylo)
+		return (error_message());
+	if (phylo->no_phylos < 2)
+		return (one_phylo(phylo));
+	init_processes(phylo);
+	// phylos = init_phylos(setup); // ??
 	terminate_setup(&setup);
 	terminate_phylos(phylos);
 	return (0);

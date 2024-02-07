@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:47:10 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 06:57:30 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:24:23 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,58 +23,59 @@ int	check_init(t_setup *s)
 	return (0);
 }
 
-t_setup	*init_info(const char **args)
+t_phylos	*init_info(const char **args)
 {
-	t_setup	*setup;
+	t_phylos	*phylo;
 
-	setup = (t_setup *)malloc(sizeof(t_setup));
-	setup->start_time = get_time();
-	setup->phylo_dead = false;
-	setup->no_phylos = ft_atol(args[0]);
-	setup->tt_die = ft_atol(args[1]);
-	setup->tt_eat = ft_atol(args[2]);
-	setup->tt_sleep = ft_atol(args[3]);
+	phylo = (t_phylos *)malloc(sizeof(t_phylos));
+	phylo->start_time = get_time();
+	phylo->no_phylos = ft_atol(args[0]);
+	phylo->tt_die = ft_atol(args[1]);
+	phylo->tt_eat = ft_atol(args[2]);
+	phylo->tt_sleep = ft_atol(args[3]);
+	phylo->eat_time = get_time();
+	phylo->times_eated = 0;
 	if (args[4])
-		setup->max_eat = ft_atol(args[4]);
+		phylo->max_eat = ft_atol(args[4]);
 	else
-		setup->max_eat = UINT32_MAX;
-	if (check_init(setup))
-		return (setup); // dela
-	return(setup);
+		phylo->max_eat = UINT32_MAX;
+	if (check_init(phylo))
+		return (phylo);
+	phylo->forks = sem_open("FORKS", O_CREAT, 0644, (phylo->no_phylos / 2));
+	phylo->phylo_dead = sem_open("DEAD", O_CREAT, 0644, 0);
+	phylo->phylo_full = sem_open("FULL", O_CREAT, 0644, 0);
+	return (phylo);
 }
 
-t_phylos	*init_phylo(t_setup *setup, uint32_t no)
+t_phylos	*init_phylo()
 {
-	t_phylos	*new_phylo;
+	t_phylos	*phylo;
+	int32_t		status;
 
-	new_phylo = (t_phylos *)malloc(sizeof(t_phylos));
-	if (!new_phylo)
-		return (NULL); // dela
-	new_phylo->no = no;
-	new_phylo->eat_time = get_time();
-	new_phylo->times_eated = 0;
-	new_phylo->setup = setup;
-	new_phylo->pid = fork();
-	if (new_phylo->pid < 0)
-		return (new_phylo);
-	return (new_phylo);
+
+	phylo = (t_phylos *)malloc(sizeof(t_phylos));
+	if (!phylo)
+		return (NULL); // del
+	if (phylo->pid == 0)
+		init_process(phylo);
+	else
+		free(phylo);
+	return (NULL); // ??
 }
 
 t_phylos	**init_phylos(t_setup *setup)
 {
 	uint32_t	i;
-	t_phylos	**phylosofers;
+	t_phylos	*phylos[setup->no_phylos + 1];
+
 
 	i = 0;
-	phylosofers = (t_phylos **)malloc(sizeof(t_phylos *) * (setup->no_phylos + 1));
-	if (!phylosofers)
-		return (NULL); //dela
-	phylosofers[setup->no_phylos] = 0;
+	phylos[setup->no_phylos] = NULL;
 	while (i < setup->no_phylos)
 	{
-		phylosofers[i] = init_phylo(setup, (i + 1));
+		phylos[i] = init_phylo(setup, (i + 1));
 		i++;
 	}
-	return (phylosofers);
+	return (phylos); // ??
 }
 

@@ -1,5 +1,7 @@
 {
 	"files.associations": {
-		"stdint.h": "c"
+		"stdint.h": "c",
+		"siginfo_t.h": "c",
+		"phylosophers.h": "c"
 	}
 }

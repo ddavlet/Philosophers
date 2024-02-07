@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:56:12 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 06:24:13 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:28:12 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	check_die(t_phylos	**phylos)
 		while (phylos[i])
 		{
 			if (is_dead(phylos[i]))
-				exit(1);
+				exit(i);
 			t += phylos[i]->times_eated;
 			if (t == 0 && i == (phylos[i]->setup->no_phylos - 1))
 				exit(2);

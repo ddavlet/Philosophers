@@ -1,2 +1,3 @@
-need to protect entry
-need to accept different entries
+semaphore forks
+main process must kill all children
+main or child process can wait for dead semapore initial 0 incremented in child processes, if sema released than someone is dead

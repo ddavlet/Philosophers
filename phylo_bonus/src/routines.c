@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:49:57 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/02 22:15:12 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:31:12 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	is_died(uint32_t j, t_phylos **phylos)
 	i = 0;
 	while (phylos[i])
 		if (phylos[i]->no == j)
-			break;
+			break ;
 	printf("%ld %d died\n", get_timestamp(phylos[i]), phylos[i]->no);
 	phylos[i]->setup->phylo_dead = true;
 }
