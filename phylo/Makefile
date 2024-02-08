@@ -1,5 +1,5 @@
 CC := cc
-NAME := phylo
+NAME := philo
 FLAGS := -Wall -Werror -Wextra
 INCLUDES := -Iinc
 RM := rm -f

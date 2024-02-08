@@ -42,7 +42,7 @@ int	try_fork(t_phylos *phylo)
 
 int	usage_message(void)
 {
-	printf("Error: too few arguments.\nUsage: ./phylosopher"
+	printf("Error: wrong number of arguments.\nUsage: ./phylosopher"
 		"number_of_philosophers time_to_die time_to_eat time_to_sleep"
 		"[number_of_times_each_philosopher_must_eat]\n");
 	return (0);
