@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:49:57 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/08 16:04:59 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:25:37 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/phylosophers.h"
+#include "../inc/philo_bonus.h"
 
 void	is_eating(t_phylos *phylo)
 {

@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:48:32 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/08 16:04:49 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:25:34 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/phylosophers.h"
+#include "../inc/philo_bonus.h"
 
 void	kill_child(int *pids, uint32_t phy_no, pid_t pid)
 {

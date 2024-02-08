@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   threads.c                                          :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 11:48:32 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/04 18:33:33 by ddavlety         ###   ########.fr       */
+/*   Created: 2024/01/31 16:04:01 by ddavlety          #+#    #+#             */
+/*   Updated: 2024/02/08 16:25:40 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/phylosophers.h"
+#include "../inc/philo_bonus.h"
 
-int	join_threads(t_phylos **phylos)
+int	is_dead(t_phylos *phylo)
 {
-	uint32_t	i;
+	int	time;
 
-	i = 0;
-	while (phylos[i])
-		if (pthread_join(phylos[i++]->thread, NULL))
-			return (1);
-	return (0);
+	time = phylo->tt_die - (get_time() - phylo->eat_time);
+	if (time <= 0)
+		return (1);
+	else
+		return (0);
 }
 
-int	init_thread(t_phylos **phylos)
+uint32_t	times_eated(t_phylos *phylos)
 {
 	uint32_t	i;
 
-	i = 0;
-	while (phylos[i])
-	{
-		if (pthread_create(&(phylos[i]->thread), NULL,
-				&routine_controler, phylos[i]))
-			return (1);
-		i++;
-	}
-	return (0);
+	i = phylos->times_eated;
+	return (i);
 }

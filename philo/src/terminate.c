@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 17:56:45 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/04 18:13:24 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:20:16 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/phylosophers.h"
+#include "../inc/philo.h"
 
 int	terminate_setup(t_setup **setup_ptr, int code)
 {

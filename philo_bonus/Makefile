@@ -4,7 +4,7 @@ FLAGS := -Wall -Werror -Wextra
 INCLUDES := -Iinc
 RM := rm -f
 SRC_DIR := ./src/
-SOURCE := phylo_bonus.c process.c utils.c init.c routines.c utils_2.c
+SOURCE := philo_bonus.c process.c utils.c init.c routines.c utils_2.c
 SRC := $(addprefix $(SRC_DIR), $(SOURCE))
 OBJ := $(SRC:.c=.o)
 DRAW := ./draw
@@ -13,7 +13,7 @@ all: draw $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) -pthread $(FLAGS) -g $(OBJ) $(INCLUDES) -o $(NAME)
-# @bash makedraw.sh
+	@bash makedraw.sh
 
 %.o: %.c
 	@$(CC) -g -pthread $(FLAGS) -c $< -o $@

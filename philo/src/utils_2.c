@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:01 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/04 19:10:56 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:20:21 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/phylosophers.h"
+#include "../inc/philo.h"
 
 int	try_fork_first(t_phylos *phylo)
 {

@@ -4,7 +4,7 @@ FLAGS := -Wall -Werror -Wextra
 INCLUDES := -Iinc
 RM := rm -f
 SRC_DIR := ./src/
-SOURCE := phylo.c threads.c utils.c init.c routines.c check_dead.c utils_2.c terminate.c
+SOURCE := philo.c threads.c utils.c init.c routines.c check_dead.c utils_2.c terminate.c
 SRC := $(addprefix $(SRC_DIR), $(SOURCE))
 OBJ := $(SRC:.c=.o)
 DRAW := ./draw

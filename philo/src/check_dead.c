@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:56:12 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/04 18:15:15 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:19:42 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/phylosophers.h"
+#include "../inc/philo.h"
 
 int	is_dead(t_phylos *phylo)
 {
