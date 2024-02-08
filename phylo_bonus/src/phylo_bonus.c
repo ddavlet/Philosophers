@@ -6,61 +6,54 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/07 16:25:17 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:07:25 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/phylosophers.h"
 
-int	one_phylo(t_setup *setup)
+int	one_phylo(t_phylos *setup)
 {
 	printf("%ld %d is thinking\n", get_time() - setup->start_time, 1);
 	printf("%ld %d has taken a fork\n", get_time() - setup->start_time, 1);
 	while ((get_time() - setup->start_time) != setup->tt_die)
 		usleep(1);
 	printf("%ld %d died\n", get_time() - setup->start_time, 1);
+	sem_close(setup->print);
+	sem_unlink("/PRINT");
+	sem_close(setup->forks);
+	sem_unlink("/FORKS");
 	free(setup);
 	return (0);
 }
 
-void	*routine_controler(t_phylos *phylo)
+void	routine_controler(t_phylos *phylo)
 {
 	is_thinking(phylo);
 	while (phylo->times_eated < phylo->max_eat)
 	{
-		sem_wait(phylo->forks);
-
+		taken_fork(phylo);
+		is_eating(phylo);
+		is_sleeping(phylo);
+		is_thinking(phylo);
+		if (is_dead(phylo))
+		{
+			is_died(phylo);
+			sem_close (phylo->forks);
+			sem_close (phylo->print);
+			free(phylo);
+			exit(1);
+		}
 	}
+	sem_close (phylo->forks);
+	sem_close (phylo->print);
 	free(phylo);
-	return (NULL);
-}
-
-void	terminate_setup(t_setup **setup_ptr)
-{
-	t_setup	*setup;
-
-	setup = *setup_ptr;
-	free(setup);
-	*setup_ptr = NULL;
-}
-
-void	terminate_phylos(t_phylos **phylos)
-{
-	uint32_t	i;
-
-	i = 0;
-	if (!phylos)
-		return ;
-	while (phylos[i])
-	{
-		free(phylos[i++]);
-	}
-	free(phylos);
+	exit(0);
 }
 
 int	usage_message(void)
 {
-	printf("Error: too few arguments.\nUsage: ./phylosopher"
+	printf("Error: wrong number of arguments.\nUsage: ./phylosopher"
 		"number_of_philosophers time_to_die time_to_eat time_to_sleep"
 		"[number_of_times_each_philosopher_must_eat]\n");
 	return (0);
@@ -75,6 +68,7 @@ int	error_message(void)
 int	main(int argc, char *argv[])
 {
 	t_phylos	*phylo;
+	pid_t		*child_pids;
 
 	if (argc < 5 || argc > 6)
 		return (usage_message());
@@ -83,9 +77,13 @@ int	main(int argc, char *argv[])
 		return (error_message());
 	if (phylo->no_phylos < 2)
 		return (one_phylo(phylo));
-	init_processes(phylo);
-	// phylos = init_phylos(setup); // ??
-	terminate_setup(&setup);
-	terminate_phylos(phylos);
+	child_pids = init_processes(phylo);
+	wait_processes(child_pids, phylo->no_phylos);
+	sem_close(phylo->print);
+	sem_unlink("/PRINT");
+	sem_close(phylo->forks);
+	sem_unlink("/FORKS");
+	free(phylo);
+	free(child_pids);
 	return (0);
 }

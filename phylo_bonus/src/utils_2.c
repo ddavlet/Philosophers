@@ -6,15 +6,27 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:01 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 06:48:54 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:02:23 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/phylosophers.h"
 
-int	try_fork(t_phylos *phylo)
+int	is_dead(t_phylos *phylo)
 {
-	while (phylo->setup->no_phylos < 2)
-		usleep(1);
-	return (1);
+	int	time;
+
+	time = phylo->tt_die - (get_time() - phylo->eat_time);
+	if (time <= 0)
+		return (1);
+	else
+		return (0);
+}
+
+uint32_t	times_eated(t_phylos *phylos)
+{
+	uint32_t	i;
+
+	i = phylos->times_eated;
+	return (i);
 }

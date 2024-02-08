@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:47:21 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/06 14:09:28 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:07:39 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ time_t	ft_atol(const char *nptr)
 		nbr = nbr * 10 + (time_t)(*nptr - '0');
 		nptr++;
 	}
-	if(*nptr != 0)
+	if (*nptr != 0)
 		return (0);
 	return (nbr);
 }
@@ -55,6 +55,5 @@ time_t	get_time(void)
 
 time_t	get_timestamp(t_phylos *phylo)
 {
-	return (get_time() - phylo->setup->start_time);
+	return (get_time() - phylo->start_time);
 }
-
