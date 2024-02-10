@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/08 16:25:25 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/10 12:27:21 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ int	main(int argc, char *argv[])
 	if (phylo->no_phylos < 2)
 		return (one_phylo(phylo));
 	child_pids = init_processes(phylo);
-	wait_processes(child_pids, phylo->no_phylos);
 	sem_close(phylo->print);
 	sem_unlink("/PRINT");
 	sem_close(phylo->forks);
 	sem_unlink("/FORKS");
+	wait_processes(child_pids, phylo->no_phylos);
 	free(phylo);
 	free(child_pids);
 	return (0);
