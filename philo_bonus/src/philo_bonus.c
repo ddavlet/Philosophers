@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/14 13:06:19 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:14:32 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,7 @@ void	routine_controler(t_philos *philo)
 		is_eating(philo);
 		is_sleeping(philo);
 		is_thinking(philo);
-		if (is_dead(philo))
-		{
-			is_died(philo);
-			destroy_semaph(philo);
-			free(philo);
-			exit(1);
-		}
+		is_dead(philo);
 	}
 	destroy_semaph(philo);
 	free(philo);

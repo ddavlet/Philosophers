@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:52 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/14 13:06:20 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:50:58 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_philos
 	time_t			times_eated;
 	sem_t			*forks;
 	sem_t			*print;
+	pt
 }					t_philos;
 
 /*Utils*/
@@ -67,6 +68,6 @@ void		is_died(t_philos *philo);
 void		routine_controler(t_philos *philo);
 
 /*Mutex functions*/
-int			is_dead(t_philos *philo);
+void		is_dead(t_philos *philo);
 
 #endif
