@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:47:21 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/08 16:25:43 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:06:22 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ time_t	get_time(void)
 	return (time);
 }
 
-time_t	get_timestamp(t_phylos *phylo)
+time_t	get_timestamp(t_philos *philo)
 {
-	return (get_time() - phylo->start_time);
+	return (get_time() - philo->start_time);
 }

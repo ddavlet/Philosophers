@@ -6,15 +6,15 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:47:10 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/08 16:25:21 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:06:20 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo_bonus.h"
 
-int	check_init(t_phylos *s)
+int	check_init(t_philos *s)
 {
-	if (!s->no_phylos
+	if (!s->no_philos
 		|| !s->tt_die
 		|| !s->tt_eat
 		|| !s->tt_sleep
@@ -23,28 +23,28 @@ int	check_init(t_phylos *s)
 	return (0);
 }
 
-t_phylos	*init_info(const char **args)
+t_philos	*init_info(const char **args)
 {
-	t_phylos	*phylo;
+	t_philos	*philo;
 
-	phylo = (t_phylos *)malloc(sizeof(t_phylos));
-	phylo->start_time = get_time();
-	phylo->no_phylos = ft_atol(args[0]);
-	phylo->tt_die = ft_atol(args[1]);
-	phylo->tt_eat = ft_atol(args[2]);
-	phylo->tt_sleep = ft_atol(args[3]);
-	phylo->eat_time = get_time();
-	phylo->times_eated = 0;
+	philo = (t_philos *)malloc(sizeof(t_philos));
+	philo->start_time = get_time();
+	philo->no_philos = ft_atol(args[0]);
+	philo->tt_die = ft_atol(args[1]);
+	philo->tt_eat = ft_atol(args[2]);
+	philo->tt_sleep = ft_atol(args[3]);
+	philo->eat_time = get_time();
+	philo->times_eated = 0;
 	if (args[4])
-		phylo->max_eat = ft_atol(args[4]);
+		philo->max_eat = ft_atol(args[4]);
 	else
-		phylo->max_eat = UINT32_MAX;
-	if (check_init(phylo))
+		philo->max_eat = UINT32_MAX;
+	if (check_init(philo))
 	{
-		free(phylo);
+		free(philo);
 		return (NULL);
 	}
-	phylo->forks = sem_open("/FORKS", O_CREAT, 0644, phylo->no_phylos / 2);
-	phylo->print = sem_open("/PRINT", O_CREAT, 0644, 1);
-	return (phylo);
+	philo->forks = sem_open("/FORKS", O_CREAT, 0644, philo->no_philos / 2);
+	philo->print = sem_open("/PRINT", O_CREAT, 0644, 1);
+	return (philo);
 }

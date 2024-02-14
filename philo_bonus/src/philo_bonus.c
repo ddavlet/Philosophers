@@ -6,54 +6,50 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:25 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/10 12:27:21 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:06:19 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo_bonus.h"
 
-int	one_phylo(t_phylos *setup)
+int	one_philo(t_philos *setup)
 {
 	printf("%ld %d is thinking\n", get_time() - setup->start_time, 1);
 	printf("%ld %d has taken a fork\n", get_time() - setup->start_time, 1);
 	while ((get_time() - setup->start_time) != setup->tt_die)
 		usleep(1);
 	printf("%ld %d died\n", get_time() - setup->start_time, 1);
-	sem_close(setup->print);
-	sem_unlink("/PRINT");
-	sem_close(setup->forks);
-	sem_unlink("/FORKS");
+	destroy_semaph(setup);
 	free(setup);
 	return (0);
 }
 
-void	routine_controler(t_phylos *phylo)
+void	routine_controler(t_philos *philo)
 {
-	is_thinking(phylo);
-	while (phylo->times_eated < phylo->max_eat)
+	is_thinking(philo);
+	while (philo->times_eated < philo->max_eat)
 	{
-		taken_fork(phylo);
-		is_eating(phylo);
-		is_sleeping(phylo);
-		is_thinking(phylo);
-		if (is_dead(phylo))
+		usleep(200);
+		taken_fork(philo);
+		is_eating(philo);
+		is_sleeping(philo);
+		is_thinking(philo);
+		if (is_dead(philo))
 		{
-			is_died(phylo);
-			sem_close (phylo->forks);
-			sem_close (phylo->print);
-			free(phylo);
+			is_died(philo);
+			destroy_semaph(philo);
+			free(philo);
 			exit(1);
 		}
 	}
-	sem_close (phylo->forks);
-	sem_close (phylo->print);
-	free(phylo);
+	destroy_semaph(philo);
+	free(philo);
 	exit(0);
 }
 
 int	usage_message(void)
 {
-	printf("Error: wrong number of arguments.\nUsage: ./phylosopher"
+	printf("Error: wrong number of arguments.\nUsage: ./philosopher"
 		"number_of_philosophers time_to_die time_to_eat time_to_sleep"
 		"[number_of_times_each_philosopher_must_eat]\n");
 	return (0);
@@ -67,23 +63,20 @@ int	error_message(void)
 
 int	main(int argc, char *argv[])
 {
-	t_phylos	*phylo;
+	t_philos	*philo;
 	pid_t		*child_pids;
 
 	if (argc < 5 || argc > 6)
 		return (usage_message());
-	phylo = init_info((const char **)&argv[1]);
-	if (!phylo)
+	philo = init_info((const char **)&argv[1]);
+	if (!philo)
 		return (error_message());
-	if (phylo->no_phylos < 2)
-		return (one_phylo(phylo));
-	child_pids = init_processes(phylo);
-	sem_close(phylo->print);
-	sem_unlink("/PRINT");
-	sem_close(phylo->forks);
-	sem_unlink("/FORKS");
-	wait_processes(child_pids, phylo->no_phylos);
-	free(phylo);
+	if (philo->no_philos < 2)
+		return (one_philo(philo));
+	child_pids = init_processes(philo);
+	destroy_semaph(philo);
+	wait_processes(child_pids, philo->no_philos);
+	free(philo);
 	free(child_pids);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:48:32 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/08 16:25:34 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:06:21 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,24 @@ int	wait_processes(int *pids, uint32_t phy_no)
 	return (0);
 }
 
-pid_t	*init_processes(t_phylos *phylo)
+pid_t	*init_processes(t_philos *philo)
 {
 	uint32_t	i;
 	pid_t		*pids;
 
 	i = 0;
-	pids = (int *)malloc(sizeof(int) * phylo->no_phylos);
-	while (i < phylo->no_phylos)
+	pids = (int *)malloc(sizeof(int) * philo->no_philos);
+	while (i < philo->no_philos)
 	{
-		phylo->pid = fork();
-		if (phylo->pid == 0)
+		philo->pid = fork();
+		if (philo->pid == 0)
 		{
-			phylo->no = (i + 1);
+			philo->no = (i + 1);
 			free(pids);
-			routine_controler(phylo);
+			routine_controler(philo);
 		}
 		else
-			pids[i] = phylo->pid;
+			pids[i] = philo->pid;
 		i++;
 	}
 	return (pids);
