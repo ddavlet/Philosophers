@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:47:52 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/14 13:50:58 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/29 10:51:55 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_philos
 	time_t			times_eated;
 	sem_t			*forks;
 	sem_t			*print;
-	pt
 }					t_philos;
 
 /*Utils*/
