@@ -28,7 +28,8 @@ In this problem, a certain number of philosophers sit at a round table. There is
   2. Wait for both forks (left and right).
   3. Eat for a certain time.
   4. Release both forks.
-  5. Repeat.
+  5. Sleep for a certain time.
+  6. Repeat.
 
 The solution ensures no philosopher will starve and avoids deadlock through proper synchronization techniques.
 
